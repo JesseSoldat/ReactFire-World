@@ -1,13 +1,31 @@
 import React from 'react';
+import ReactFireMixin from 'reactfire'
+import reactMixin from 'react-mixin'
 
 export default React.createClass({
+  	mixins: [ReactFireMixin],
+
 	login(e){
 		e.preventDefault();
 		this.props.login();
+
 	},
 	register(e){
 		e.preventDefault();
 		this.props.register();
+		let email = document.querySelector('.regEmail').value;
+		let password = document.querySelector('.regPassword').value;
+		
+		firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){
+			let errorCode = error.code;
+			let errorMessage = error.message;
+			if(errorCode == 'auth/weak-password'){
+				console.log('The password is weak');
+			} else {
+				console.log(errorMessage);
+			}
+			console.log(errorCode);
+		});
 	},
 	render(){
 		return(
