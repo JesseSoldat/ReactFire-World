@@ -54,10 +54,20 @@ exports['default'] = _backbone2['default'].Router.extend({
 	},
 
 	showLogin: function showLogin() {
+
 		this.render(_react2['default'].createElement(
 			'div',
 			null,
-			_react2['default'].createElement(_views.LoginComponent, null)
+			_react2['default'].createElement(_views.LoginComponent, {
+				login: function () {
+
+					console.log('login');
+				},
+				register: function () {
+
+					console.log('reg');
+				}
+			})
 		));
 	}
 
@@ -95,7 +105,17 @@ var _react2 = _interopRequireDefault(_react);
 exports["default"] = _react2["default"].createClass({
 	displayName: "login",
 
+	login: function login(e) {
+		e.preventDefault();
+		this.props.login();
+	},
+	register: function register(e) {
+		e.preventDefault();
+		this.props.register();
+	},
 	render: function render() {
+		var _this = this;
+
 		return _react2["default"].createElement(
 			"div",
 			null,
@@ -107,11 +127,23 @@ exports["default"] = _react2["default"].createClass({
 			_react2["default"].createElement(
 				"form",
 				null,
-				_react2["default"].createElement("input", { type: "text", placeholder: "Email", required: true }),
-				_react2["default"].createElement("input", { type: "text", placeholder: "Email", required: true }),
+				_react2["default"].createElement("input", {
+					className: "logEmail",
+					type: "text",
+					placeholder: "Email",
+					required: true
+				}),
+				_react2["default"].createElement("input", {
+					className: "logPassword",
+					type: "text",
+					placeholder: "Password",
+					required: true
+				}),
 				_react2["default"].createElement(
 					"button",
-					null,
+					{ onClick: function (e) {
+							return _this.login(e);
+						} },
 					"Login"
 				)
 			),
@@ -125,11 +157,23 @@ exports["default"] = _react2["default"].createClass({
 			_react2["default"].createElement(
 				"form",
 				null,
-				_react2["default"].createElement("input", { type: "text", placeholder: "Email", required: true }),
-				_react2["default"].createElement("input", { type: "text", placeholder: "Email", required: true }),
+				_react2["default"].createElement("input", {
+					className: "regEmail",
+					type: "text",
+					placeholder: "Email",
+					required: true
+				}),
+				_react2["default"].createElement("input", {
+					className: "regPassword",
+					type: "text",
+					placeholder: "Password",
+					required: true
+				}),
 				_react2["default"].createElement(
 					"button",
-					null,
+					{ onClick: function (e) {
+							return _this.register(e);
+						} },
 					"Register"
 				)
 			)

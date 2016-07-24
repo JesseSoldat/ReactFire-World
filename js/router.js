@@ -29,9 +29,19 @@ export default Backbone.Router.extend({
 	},
 
 	showLogin(){
+	
 		this.render(
 			<div>
-				<LoginComponent />
+				<LoginComponent 
+				login={() => {
+					
+					console.log('login');
+				}}
+				register={() => {
+					
+					console.log('reg');
+				}}
+				/>
 			</div>
 			);
 		
