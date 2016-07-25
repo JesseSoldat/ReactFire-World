@@ -22,6 +22,7 @@ export default Backbone.Router.extend({
 
 	routes: {
 		'' : 'showLogin',
+		'dash' : 'showDash',
 	},
 
 
@@ -39,8 +40,26 @@ export default Backbone.Router.extend({
 		ReactDOM.render(component, this.el);
 	},
 
+	goto(route){
+		console.log(route);
+		this.navigate(route, {
+			trigger: true
+		});
+	},
+
 	showLogin(){
-	
+		let _this = this;
+
+		firebase.auth().onAuthStateChanged(function(user){
+				if(user){
+					console.log(user);
+					_this.goto('dash');
+					
+				} else {
+					console.log('no user');
+				}
+		});
+
 		this.render(
 			<div>
 				<LoginComponent 
@@ -52,10 +71,15 @@ export default Backbone.Router.extend({
 					
 					// console.log('reg');
 				}}
+				
 				/>
 			</div>
 			);
 		
 	},
+
+	showDash(){
+		console.log('dash');
+	}
 
 });

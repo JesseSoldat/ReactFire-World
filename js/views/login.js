@@ -5,9 +5,46 @@ import reactMixin from 'react-mixin'
 export default React.createClass({
   	mixins: [ReactFireMixin],
 
+  	componentWillMount: function(){
+  	// 	firebase.auth().onAuthStateChanged(function(user){
+			// 	if(user){
+			// 		console.log(user);
+					
+			// 	} else {
+			// 		console.log('no user');
+			// 	}
+			// });
+  	},
+
 	login(e){
 		e.preventDefault();
 		this.props.login();
+
+		let email = document.querySelector('.logEmail').value;
+		let password = document.querySelector('.logPassword').value;
+
+		firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error){
+			let errorCode = error.code;
+			let errorMessage = error.message;
+
+			if(errorCode === 'auth/wrong-password'){
+				console.log('Wrong Password');
+			} else {
+				console.log(errorMessage);
+			}
+			
+
+			firebase.auth().onAuthStateChanged(function(user){
+				if(user){
+					console.log(user);
+				} else {
+					console.log('no user');
+				}
+			});
+
+
+		});
+
 
 	},
 	register(e){

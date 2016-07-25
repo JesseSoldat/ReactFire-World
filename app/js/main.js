@@ -49,7 +49,8 @@ firebase.initializeApp(config);
 exports['default'] = _backbone2['default'].Router.extend({
 
 	routes: {
-		'': 'showLogin'
+		'': 'showLogin',
+		'dash': 'showDash'
 	},
 
 	initialize: function initialize(appElement) {
@@ -65,7 +66,24 @@ exports['default'] = _backbone2['default'].Router.extend({
 		_reactDom2['default'].render(component, this.el);
 	},
 
+	goto: function goto(route) {
+		console.log(route);
+		this.navigate(route, {
+			trigger: true
+		});
+	},
+
 	showLogin: function showLogin() {
+		var _this = this;
+
+		firebase.auth().onAuthStateChanged(function (user) {
+			if (user) {
+				console.log(user);
+				_this.goto('dash');
+			} else {
+				console.log('no user');
+			}
+		});
 
 		this.render(_react2['default'].createElement(
 			'div',
@@ -79,8 +97,13 @@ exports['default'] = _backbone2['default'].Router.extend({
 
 					// console.log('reg');
 				}
+
 			})
 		));
+	},
+
+	showDash: function showDash() {
+		console.log('dash');
 	}
 
 });
@@ -127,9 +150,42 @@ exports['default'] = _react2['default'].createClass({
 
 	mixins: [_reactfire2['default']],
 
+	componentWillMount: function componentWillMount() {
+		// 	firebase.auth().onAuthStateChanged(function(user){
+		// 	if(user){
+		// 		console.log(user);
+
+		// 	} else {
+		// 		console.log('no user');
+		// 	}
+		// });
+	},
+
 	login: function login(e) {
 		e.preventDefault();
 		this.props.login();
+
+		var email = document.querySelector('.logEmail').value;
+		var password = document.querySelector('.logPassword').value;
+
+		firebase.auth().signInWithEmailAndPassword(email, password)['catch'](function (error) {
+			var errorCode = error.code;
+			var errorMessage = error.message;
+
+			if (errorCode === 'auth/wrong-password') {
+				console.log('Wrong Password');
+			} else {
+				console.log(errorMessage);
+			}
+
+			firebase.auth().onAuthStateChanged(function (user) {
+				if (user) {
+					console.log(user);
+				} else {
+					console.log('no user');
+				}
+			});
+		});
 	},
 	register: function register(e) {
 		e.preventDefault();
