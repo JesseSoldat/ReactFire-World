@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import Firbase from 'firebase';
 
 
-
 var config = {
     apiKey: "AIzaSyDrBaMFNOe8j8q22qg7uuPECOwqJAr27v8",
     authDomain: "reactfire-709f3.firebaseapp.com",
@@ -17,6 +16,7 @@ import {
 	LoginComponent,
 	NavComponent,
 	DashComponent,
+	ProfileComponent,
 
 } from './views';
 
@@ -25,6 +25,7 @@ export default Backbone.Router.extend({
 	routes: {
 		'' : 'showLogin',
 		'dash' : 'showDash',
+		'profile' : 'showProfile',
 	},
 
 
@@ -54,11 +55,11 @@ export default Backbone.Router.extend({
 
 		firebase.auth().onAuthStateChanged(function(user){
 				if(user){
-					console.log(user);
+					
 					_this.goto('dash');
 					
 				} else {
-					console.log('no user');
+					
 				}
 		});
 
@@ -67,23 +68,42 @@ export default Backbone.Router.extend({
 			<LoginComponent 
 				login={() => {
 					
-					// console.log('login');
+			
 				}}
 				register={() => {
 					
-					// console.log('reg');
+			
 				}}/>
 			</div>);
 		
 	},
 
 	showDash(){
-		
 
 		this.render(
 		<div>
-			<NavComponent logOut={() => this.goto('')} />
+			<NavComponent 
+			dash={() => this.goto('dash')}
+			profile={() => this.goto('profile')}
+			logOut={() => this.goto('')} 
+
+
+			/>
 			<DashComponent />
+		</div>)
+	},
+
+	showProfile(){
+		this.render(
+		<div>
+			<NavComponent 
+			dash={() => this.goto('dash')}
+			profile={() => this.goto('profile')}
+			logOut={() => this.goto('')} 
+
+
+			/>
+			<ProfileComponent />
 		</div>)
 	}
 
