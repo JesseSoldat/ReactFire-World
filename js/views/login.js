@@ -1,15 +1,15 @@
 import React from 'react';
-import ReactFireMixin from 'reactfire'
-import reactMixin from 'react-mixin'
+// import ReactFireMixin from 'reactfire'
+// import reactMixin from 'react-mixin'
 
 export default React.createClass({
-  	mixins: [ReactFireMixin],
+  	// mixins: [ReactFireMixin],
 
-  	componentWillMount: function(){
+  	componentWillMount(){
   	// 	firebase.auth().onAuthStateChanged(function(user){
 			// 	if(user){
 			// 		console.log(user);
-					
+
 			// 	} else {
 			// 		console.log('no user');
 			// 	}

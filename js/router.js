@@ -15,6 +15,8 @@ var config = {
 
 import {
 	LoginComponent,
+	NavComponent,
+	DashComponent,
 
 } from './views';
 
@@ -41,7 +43,7 @@ export default Backbone.Router.extend({
 	},
 
 	goto(route){
-		console.log(route);
+		
 		this.navigate(route, {
 			trigger: true
 		});
@@ -62,7 +64,7 @@ export default Backbone.Router.extend({
 
 		this.render(
 			<div>
-				<LoginComponent 
+			<LoginComponent 
 				login={() => {
 					
 					// console.log('login');
@@ -70,16 +72,19 @@ export default Backbone.Router.extend({
 				register={() => {
 					
 					// console.log('reg');
-				}}
-				
-				/>
-			</div>
-			);
+				}}/>
+			</div>);
 		
 	},
 
 	showDash(){
-		console.log('dash');
+		
+
+		this.render(
+		<div>
+			<NavComponent logOut={() => this.goto('')} />
+			<DashComponent />
+		</div>)
 	}
 
 });
