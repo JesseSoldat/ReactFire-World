@@ -1,7 +1,7 @@
 import Backbone from 'backbone';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Firbase from 'firebase';
+import Firebase from 'firebase';
 
 
 var config = {
@@ -94,17 +94,35 @@ export default Backbone.Router.extend({
 	},
 
 	showProfile(){
-		this.render(
-		<div>
-			<NavComponent 
-			dash={() => this.goto('dash')}
-			profile={() => this.goto('profile')}
-			logOut={() => this.goto('')} 
+				let _this = this;
+				firebase.auth().onAuthStateChanged(function(user){
+					
+				if(user){
+					
+					let uid = user.uid
+					// console.log(uid);
+
+					_this.render(
+						<div>
+							<NavComponent 
+							dash={() => _this.goto('dash')}
+							profile={() => _this.goto('profile')}
+							logOut={() => _this.goto('')} 
+
+							/>
+							<ProfileComponent uid={uid} />
+						</div>
+						)
+				
+				
+
+				} else {
+					console.log('no user');
+				}
+			});	
 
 
-			/>
-			<ProfileComponent />
-		</div>)
+		
 	}
 
 });

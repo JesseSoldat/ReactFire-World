@@ -1,9 +1,8 @@
 import React from 'react';
-// import ReactFireMixin from 'reactfire'
-// import reactMixin from 'react-mixin'
+
 
 export default React.createClass({
-  	// mixins: [ReactFireMixin],
+  	
 
   	componentWillMount(){
   	// 	firebase.auth().onAuthStateChanged(function(user){
@@ -32,19 +31,8 @@ export default React.createClass({
 			} else {
 				console.log(errorMessage);
 			}
-			
-
-			firebase.auth().onAuthStateChanged(function(user){
-				if(user){
-					console.log(user);
-				} else {
-					console.log('no user');
-				}
-			});
-
 
 		});
-
 
 	},
 	register(e){
@@ -62,7 +50,9 @@ export default React.createClass({
 				console.log(errorMessage);
 			}
 			console.log(errorCode);
+
 		});
+
 	},
 	render(){
 		return(
