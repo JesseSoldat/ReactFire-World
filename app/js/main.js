@@ -518,7 +518,7 @@ exports['default'] = _react2['default'].createClass({
 
 	getInitialState: function getInitialState() {
 		var user = this.props.uid;
-		console.log(user);
+
 		return {
 			users: [],
 			uid: user
@@ -532,16 +532,35 @@ exports['default'] = _react2['default'].createClass({
 
 		this.bindAsArray(firebaseRef, 'users');
 
-		firebaseRef.on('value', function (snapshot) {
-			var fNameElem = document.getElementById('fName');
-			var lNameElem = document.getElementById('lName');
+		var _this = this;
 
-			var fName = snapshot.val().fName;
-			fNameElem.textContent = fName;
+		function getData() {
+			console.log(_this.state.users.length);
 
-			var lName = snapshot.val().lName;
-			lNameElem.textContent = lName;
-		});
+			if (_this.state.users.length <= 0) {
+
+				setTimeout(function () {
+					getData();
+				}, 300);
+			} else {
+
+				firebaseRef.on('value', function (snapshot) {
+
+					var fNameElem = document.getElementById('fName');
+					var lNameElem = document.getElementById('lName');
+					var avatarElem = document.getElementById('avatar');
+
+					var fName = snapshot.val().fName;
+					fNameElem.textContent = fName;
+
+					var lName = snapshot.val().lName;
+					lNameElem.textContent = lName;
+
+					avatarElem.src = snapshot.val().avatar;
+				});
+			} //else
+		}
+		getData();
 	},
 
 	addProfile: function addProfile() {
@@ -557,6 +576,7 @@ exports['default'] = _react2['default'].createClass({
 				null,
 				'Profile'
 			),
+			_react2['default'].createElement('img', { id: 'avatar', src: '' }),
 			_react2['default'].createElement('h3', { id: 'fName' }),
 			_react2['default'].createElement('h3', { id: 'lName' }),
 			_react2['default'].createElement(

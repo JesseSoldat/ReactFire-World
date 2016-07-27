@@ -7,7 +7,7 @@ export default React.createClass({
 
   	getInitialState(){
   		let user = this.props.uid;
-  		console.log(user);
+  	
   		return {
   			users: [],
   			uid: user
@@ -21,16 +21,44 @@ export default React.createClass({
 
 	  	this.bindAsArray(firebaseRef, 'users');	
 
-	  	firebaseRef.on('value', function(snapshot){
-	  		let fNameElem = document.getElementById('fName');
-	  		let lNameElem = document.getElementById('lName');
-	  	
-	  		let fName = snapshot.val().fName;
-	  		fNameElem.textContent = fName;
 
-	  		let lName = snapshot.val().lName;
-	  		lNameElem.textContent = lName;
-	  	})
+	 	let _this = this;
+
+	 	function getData(){
+	 		console.log(_this.state.users.length);
+
+	 		if (_this.state.users.length <= 0) {
+
+	 			setTimeout(function(){
+	 				getData();
+	 			},300);
+
+	 		} else {
+	 			
+		 		firebaseRef.on('value', function(snapshot){
+
+		 		let fNameElem = document.getElementById('fName');
+		  		let lNameElem = document.getElementById('lName');
+		  		let avatarElem = document.getElementById('avatar');
+		  	
+		  		let fName = snapshot.val().fName;
+		  		fNameElem.textContent = fName;
+
+		  		let lName = snapshot.val().lName;
+		  		lNameElem.textContent = lName;
+
+		  		avatarElem.src = snapshot.val().avatar;
+
+		  		});
+
+	 		} //else
+	 	}
+	 	getData();
+
+
+	  		
+	  	
+	  
 	  				
 	},
 
@@ -38,15 +66,18 @@ export default React.createClass({
 		this.props.add(this.state.uid);
 	
 	},
+	
 
 	render(){
 		return(
 			<div>
 				<h3>Profile</h3>
+				<img id="avatar" src="" />
 				<h3 id="fName"></h3>
 				<h3 id="lName"></h3>
 
 				<button id="addProfile" onClick={this.addProfile}>Add</button>
+	
 			</div>
 			);
 	}
