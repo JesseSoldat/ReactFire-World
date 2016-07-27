@@ -9,8 +9,7 @@ export default React.createClass({
   		let user = this.props.uid;
   		console.log(user);
   		return {
-  			users: ['Ted'],
-  			items: [],
+  			users: [],
   			uid: user
   			
   		}
@@ -18,62 +17,36 @@ export default React.createClass({
   	componentWillMount() {
   		let uid = this.state.uid;
   	
-	  	let firebaseRef = firebase.database().ref('users/' + uid + '/profile');;
+	  	let firebaseRef = firebase.database().ref('users/' + uid + '/profile');
 
-	  	this.bindAsArray(firebaseRef, 'items');	
+	  	this.bindAsArray(firebaseRef, 'users');	
+
+	  	firebaseRef.on('value', function(snapshot){
+	  		let fNameElem = document.getElementById('fName');
+	  		let lNameElem = document.getElementById('lName');
+	  	
+	  		let fName = snapshot.val().fName;
+	  		fNameElem.textContent = fName;
+
+	  		let lName = snapshot.val().lName;
+	  		lNameElem.textContent = lName;
+	  	})
 	  				
 	},
+
+	addProfile(){	
+		this.props.add(this.state.uid);
 	
-	addProfile(){
+	},
 
-	let _this = this;
-	
-	
-
-	this.firebaseRefs['items'].push({
-			text: 'Japan',
-			super: 'Man'
-		});
-
-	
-		
-	//TEST
-	// console.log(this.state.users);
-	// this.setState({users: ['Bill']});
-	// setTimeout(function(){
-	// console.log(_this.state.users);
-
-	// },1000);
-	// this.firebaseRefs['items'].push({
- //  				text: 'Japan'
- //  			});
-
-			// 	firebase.auth().onAuthStateChanged(function(user){
-
-			// 	if(user){
-			// 		let email = user.email;
-			// 		let uid = user.uid
-			// 		console.log(uid);
-			// 		console.log(email);
-			// 		// let userArray = [email, uid];
-			// 		_this.setState({users: [email, uid]});
-
-			// 		// setTimeout(function(){
-			// 		console.log(_this.state.users);
-
-			// 		// },1000);
-
-			// 	} else {
-			// 		console.log('no user');
-			// 	}
-			// });	
-			//TEST
-		},
 	render(){
 		return(
 			<div>
 				<h3>Profile</h3>
-				<button onClick={this.addProfile}>Add</button>
+				<h3 id="fName"></h3>
+				<h3 id="lName"></h3>
+
+				<button id="addProfile" onClick={this.addProfile}>Add</button>
 			</div>
 			);
 	}

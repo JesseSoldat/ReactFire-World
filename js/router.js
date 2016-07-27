@@ -17,6 +17,7 @@ import {
 	NavComponent,
 	DashComponent,
 	ProfileComponent,
+	AddProfileComponent,
 
 } from './views';
 
@@ -26,6 +27,7 @@ export default Backbone.Router.extend({
 		'' : 'showLogin',
 		'dash' : 'showDash',
 		'profile' : 'showProfile',
+		'add-profile/:uid': 'showAddProfile',
 	},
 
 
@@ -107,22 +109,34 @@ export default Backbone.Router.extend({
 							<NavComponent 
 							dash={() => _this.goto('dash')}
 							profile={() => _this.goto('profile')}
+
 							logOut={() => _this.goto('')} 
 
 							/>
-							<ProfileComponent uid={uid} />
+							<ProfileComponent 
+							
+							add={(uid) => _this.goto('add-profile/' +uid)}
+
+							uid={uid} />
 						</div>
 						)
-				
-				
-
+			
 				} else {
 					console.log('no user');
 				}
 			});	
+	
+	},
 
+	showAddProfile(uid){
+		console.log(uid);
 
-		
+		this.render(
+			<div>
+				<AddProfileComponent
+				uid={uid}
+				/>
+			</div>)
 	}
 
 });
