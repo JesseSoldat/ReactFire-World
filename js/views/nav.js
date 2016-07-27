@@ -16,11 +16,14 @@ export default React.createClass({
 		return(
 			<div>
 				<ul>
+  					<h3 id="helloWorld">Hello, <i className="fa fa-globe"></i></h3>
+
 					<li onClick={this.dash}>Dash</li>
 					<li onClick={this.profile}>Profile</li>
 					<li onClick={this.logOut}>Log out</li>
 
 				</ul>
+				<hr/>
 			</div>
 			);
 	}

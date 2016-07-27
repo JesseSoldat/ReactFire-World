@@ -40,6 +40,7 @@ export default React.createClass({
 		 		let fNameElem = document.getElementById('fName');
 		  		let lNameElem = document.getElementById('lName');
 		  		let avatarElem = document.getElementById('avatar');
+
 		  	
 		  		let fName = snapshot.val().fName;
 		  		fNameElem.textContent = fName;
@@ -49,34 +50,40 @@ export default React.createClass({
 
 		  		avatarElem.src = snapshot.val().avatar;
 
+		  		let addProfileBtn = document.getElementById('addProfile');
+		  		let editProfileBtn = document.getElementById('editProfile');
+
+		  		editProfileBtn.style.display = 'inline-block';
+
+		  		addProfileBtn.style.display = 'none';
+
 		  		});
 
 	 		} //else
 	 	}
 	 	getData();
-
-
-	  		
-	  	
-	  
-	  				
+			
 	},
 
 	addProfile(){	
 		this.props.add(this.state.uid);
 	
 	},
+
+	editProfile(){
+		this.props.edit(this.state.uid);
+	},
 	
 
 	render(){
 		return(
 			<div>
-				<h3>Profile</h3>
 				<img id="avatar" src="" />
 				<h3 id="fName"></h3>
 				<h3 id="lName"></h3>
 
-				<button id="addProfile" onClick={this.addProfile}>Add</button>
+				<button id="addProfile" onClick={this.addProfile}>Add Profile</button>
+				<button id="editProfile" onClick={this.editProfile}>Edit Profile</button>
 	
 			</div>
 			);

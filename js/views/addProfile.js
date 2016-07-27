@@ -31,16 +31,24 @@ export default React.createClass({
 		});
 
 	},
+	goBack(){
+		this.props.goBack();
+	},
 	render(){
 		return(
 		<div>
 			<h3>Add</h3>
-			<form onSubmit={this.addUser}>
+			<form>
 				<input id="fNameAdd" placeholder="First Name" required type="text"/>
 				<input id="lNameAdd" placeholder="Last Name" required type="text"/>
 				<input id="avatarAdd" placeholder="Avatar URL" required type="text"/>
-				<button>Add</button>
+				<br />
+				<br />
+				
 			</form>
+				<button onClick={this.addUser}>Add</button>
+				<button onClick={this.goBack}>Back</button>
+
 		</div>
 		)
 	}
